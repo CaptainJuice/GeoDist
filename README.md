@@ -422,12 +422,8 @@ procedure Fast-BIC1D(Z)
         σ̂_comb² ← (1/n) [∑_{z ∈ C₁} ||z - μ̂₁||² + ∑_{z ∈ C₂} ||z - μ̂₂||²]
 
         // Compute BIC for both variance cases
-        BIC_diff_var ← -2[ n₁logŵ₁ - (n₁/2)log(2πσ̂₁²) - (n₁/2) + 
-                           n₂logŵ₂ - (n₂/2)log(2πσ̂₂²) - (n₂/2) ] + 
-                       log(n) * 5  // 5 parameters: μ₁,μ₂,σ₁²,σ₂²,ŵ₁
-        BIC_same_var ← -2[ n₁logŵ₁ - (n₁/2)log(2πσ̂_comb²) - (n₁/2) + 
-                           n₂logŵ₂ - (n₂/2)log(2πσ̂_comb²) - (n₂/2) ] + 
-                       log(n) * 4  // 4 parameters: μ₁,μ₂,σ̂_comb²,ŵ₁
+        BIC_diff_var ← -2[ n₁logŵ₁ - (n₁/2)log(2πσ̂₁²) - n₂logŵ₂ - (n₂/2)log(2πσ̂₂²)]   // 5 parameters: μ₁,μ₂,σ₁²,σ₂²,ŵ₁
+        BIC_same_var ← -2[ n₁logŵ₁ - (n₁/2)log(2πσ̂_comb²) - n₂logŵ₂ + (n₂/2)log(2πσ̂_comb²) ] // 4 parameters: μ₁,μ₂,σ̂_comb²,ŵ₁
 
         // Select minimum BIC
         BIC_curr ← min(BIC_diff_var, BIC_same_var)
